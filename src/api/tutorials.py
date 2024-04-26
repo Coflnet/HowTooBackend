@@ -25,7 +25,7 @@ async def create_new_tutorial_with_steps(
 async def get_list_of_steps_from_tutorial_id(
     tutorial_id: str,
     db: Session = Depends(get_db),
-) -> List[Steps]:
+) -> Tutorials:
     # db_user = db.exec(select(TutorialsTable).where(TutorialsTable.id == tutorial_id)).first()
     # return db_user
     return
@@ -44,7 +44,7 @@ async def get_all_tutorials(
 async def update_steps_of_a_tutorial(
     steps: List[Steps],
     db: Session = Depends(get_db),
-) -> TutorialsTable:
+) -> Tutorials:
     # try:
     #     db.add(user)
     # except IntegrityError:

@@ -6,5 +6,5 @@ class Steps(BaseModel):
     image_url: str
     headline: str
     description: str
-    metadata: dict
+    marker: dict
     tutorial_id: int
