@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 router = APIRouter(tags=["Users"])
 
 
-@router.post("/api/tutorials")
+@router.post("/api/tutorials", status_code=status.HTTP_200_OK)
 async def create_new_tutorial_with_steps(
     tutorial: PostTutorials,
     db: Session = Depends(get_db),
@@ -20,7 +20,7 @@ async def create_new_tutorial_with_steps(
     return
 
 
-@router.get("/api/tutorials/{tutorial_id}")
+@router.get("/api/tutorials/{tutorial_id}", status_code=status.HTTP_200_OK)
 async def get_list_of_steps_from_tutorial_id(
     tutorial_id: int,
     db: Session = Depends(get_db),
@@ -30,7 +30,7 @@ async def get_list_of_steps_from_tutorial_id(
     return
     
 
-@router.get("/api/tutorials")
+@router.get("/api/tutorials", status_code=status.HTTP_200_OK)
 async def get_all_tutorials(
     db: Session = Depends(get_db),
 ) -> List[Tutorials]:
@@ -39,7 +39,7 @@ async def get_all_tutorials(
     return
 
 
-@router.put("/api/tutorials")
+@router.put("/api/tutorials", status_code=status.HTTP_200_OK)
 async def update_steps_of_a_tutorial(
     tutorial: Tutorials,
     db: Session = Depends(get_db),

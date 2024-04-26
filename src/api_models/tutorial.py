@@ -1,10 +1,11 @@
 from typing import Optional, List
 from pydantic import BaseModel
 # from src.api_models.step import Steps
+from fastapi import FastAPI, File, UploadFile
 
 class Steps(BaseModel):
     position: int
-    image_url: str
+    file:UploadFile
     description: str
     marker: dict
 
