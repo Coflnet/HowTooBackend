@@ -1,10 +1,11 @@
-import os
 from typing import List
 import boto3
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from src.db.s3 import upload_file
 from src.db_models.tutorials import TutorialsTable
 from src.db_models.steps import StepsTable
+from fastapi import APIRouter, Depends, HTTPException, status
+from src.api_models.tutorial import Tutorials, PostTutorials
 from src.db.session import get_db
 from sqlmodel import Session, select
 from sqlalchemy.exc import IntegrityError
@@ -12,40 +13,40 @@ from sqlalchemy.exc import IntegrityError
 router = APIRouter(tags=["Users"])
 
 
-@router.post("/api/tutorials")
-async def get_all_users(
+@router.post("/api/tutorials", status_code=status.HTTP_200_OK)
+async def create_new_tutorial_with_steps(
+    tutorial: PostTutorials,
     db: Session = Depends(get_db),
-) -> List[TutorialsTable]:
+) -> int:
     # db_users = db.exec(select(TutorialsTable)).all()
     # return db_users
     return
 
 
-@router.get("/api/tutorials/{tutorial_id}")
-async def get_user_by_id(
-    tutorial_id: str,
+@router.get("/api/tutorials/{tutorial_id}", status_code=status.HTTP_200_OK)
+async def get_list_of_steps_from_tutorial_id(
+    tutorial_id: int,
     db: Session = Depends(get_db),
-) -> TutorialsTable:
+) -> Tutorials:
     # db_user = db.exec(select(TutorialsTable).where(TutorialsTable.id == tutorial_id)).first()
     # return db_user
     return
     
 
-@router.get("/api/tutorials")
-async def get_user_by_id(
-    tutorial_id: str,
+@router.get("/api/tutorials", status_code=status.HTTP_200_OK)
+async def get_all_tutorials(
     db: Session = Depends(get_db),
-) -> TutorialsTable:
+) -> List[Tutorials]:
     # db_user = db.exec(select(TutorialsTable).where(TutorialsTable.id == tutorial_id)).first()
     # return db_user
     return
 
 
-@router.put("/api/tutorials")
-async def post_new_users(
-    user: TutorialsTable,
+@router.put("/api/tutorials", status_code=status.HTTP_200_OK)
+async def update_tutorial_and_steps(
+    tutorial: Tutorials,
     db: Session = Depends(get_db),
-) -> TutorialsTable:
+) -> int:
     # try:
     #     db.add(user)
     # except IntegrityError:
