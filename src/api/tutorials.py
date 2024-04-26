@@ -1,6 +1,6 @@
 from typing import List
 import boto3
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from src.db.s3 import upload_file
 from src.db_models.tutorials import TutorialsTable
 from src.db_models.steps import StepsTable
@@ -9,41 +9,47 @@ from src.api_models.tutorial import Tutorials, PostTutorials
 from src.db.session import get_db
 from sqlmodel import Session, select
 from sqlalchemy.exc import IntegrityError
+import json
 
 router = APIRouter(tags=["Tutorials"])
 
 
 @router.post("/api/tutorials", status_code=status.HTTP_200_OK)
 async def create_new_tutorial_with_steps(
-    tutorial: PostTutorials,
+    tutorial_str: str = Form(...), #PostTutorials
     files: List[UploadFile] = File(...),
     db: Session = Depends(get_db),
 ) -> int:
+    try:
+        tutorial = json.loads(tutorial_str)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid JSON in Form field")
+    
     tutorials_entry = TutorialsTable(
-        name= tutorial.name,
-        created_date_time = tutorial.created_date_time
+        name= tutorial["name"],
+        created_date_time = tutorial["created_date_time"]
     )
     db.add(tutorials_entry)
     db.commit()
     db.refresh(tutorials_entry)
     
-    for step in tutorial.steps:
+    for step in tutorial["steps"]:
         for file in files:
-            if step.file_name == file.filename:
+            if step["file_name"] == file.filename:
                 file_path = upload_file(file)
             else:
                 file_path = None
         step_entry = StepsTable(
-            position=step.position,
+            position=step["position"],
             image_path=file_path,
-            description=step.description,
-            marker=step.marker,
+            description=step["description"],
+            marker=step["marker"],
             tutorials_id=tutorials_entry.id,
         )
     db.add(step_entry)
     db.commit()
     db.refresh(step_entry)
-    return
+    return 1
 
 # @router.post("/api/test-image-upload")
 # async def upload_test_image(

@@ -1,0 +1,24 @@
+{
+  "name": "Hack:Inn",
+  "created_date_time": "27-04-2024-01-49",
+  "steps": [
+    {
+      "position": 0,
+      "file_name": "20210406_190954 (1).jpg",
+      "description": "Click Button",
+      "marker": {}
+    },
+    {
+      "position": 1,
+      "file_name": "asdgashda.jpg",
+      "description": "Scroll",
+      "marker": {}
+    },
+    {
+      "position": 2,
+      "file_name": "ashadfdfh.jpg",
+      "description": "Click Menu",
+      "marker": {}
+    }
+  ]
+}
