@@ -3,7 +3,7 @@ from pydantic import BaseModel
 # from src.api_models.step import Steps
 from fastapi import FastAPI, File, UploadFile
 
-class Steps(BaseModel):
+class PostSteps(BaseModel):
     position: int
     file: UploadFile = File(...)
     description: str
@@ -27,4 +27,4 @@ class Tutorials(BaseModel):
 class PostTutorials(BaseModel):
     name: str
     created_date_time: str = None
-    steps: List[Steps] 
+    steps: List[PostSteps] 

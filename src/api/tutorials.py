@@ -1,8 +1,6 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from src.api_models.tutorial import Tutorials, PostTutorials
-# from src.api_models.step import Steps
-# from src.db_models.steps import StepsTable
 from src.db.session import get_db
 from sqlmodel import Session, select
 from sqlalchemy.exc import IntegrityError
@@ -40,7 +38,7 @@ async def get_all_tutorials(
 
 
 @router.put("/api/tutorials", status_code=status.HTTP_200_OK)
-async def update_steps_of_a_tutorial(
+async def update_tutorial_and_steps(
     tutorial: Tutorials,
     db: Session = Depends(get_db),
 ) -> int:
