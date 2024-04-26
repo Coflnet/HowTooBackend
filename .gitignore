@@ -27,5 +27,5 @@ __pycache__/
 
 /frontend/node_modules/
 /db_save
-/backend/resources
-/backend/.env
+resources
+# .env
