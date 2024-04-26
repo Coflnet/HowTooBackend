@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile
 from src.api_models.tutorial import Tutorials, PostTutorials
 from src.db.session import get_db
 from sqlmodel import Session, select
@@ -11,6 +11,7 @@ router = APIRouter(tags=["Users"])
 @router.post("/api/tutorials", status_code=status.HTTP_200_OK)
 async def create_new_tutorial_with_steps(
     tutorial: PostTutorials,
+    files: List[UploadFile] = File(...),
     db: Session = Depends(get_db),
 ) -> int:
     # db_users = db.exec(select(TutorialsTable)).all()
