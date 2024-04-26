@@ -77,15 +77,19 @@ async def update_tutorial_and_steps(
     tutorial: Tutorials,
     db: Session = Depends(get_db),
 ) -> int:
-    # tutorial_entry = db.exec(select(TutorialsTable).where(TutorialsTable.id == tutorial.id)).first()
-    # tutorial_entry.name = tutorial.name
-    # tutorial_entry.created_date_time = tutorial.created_date_time
-    # db.add(tutorial_entry)
-    # db.commit()
-    # for step in tutorial.steps:
-    #     step_entry = db.exec(select(StepsTable).where(StepsTable.id == tutorial.id)).first()
-    #     step_entry.GetSteps
-
+    tutorial_entry = db.exec(select(TutorialsTable).where(TutorialsTable.id == tutorial.id)).first()
+    tutorial_entry.name = tutorial.name
+    tutorial_entry.created_date_time = tutorial.created_date_time
+    db.add(tutorial_entry)
+    db.commit()
+    for step in tutorial.steps:
+        step_entry = db.exec(select(StepsTable).where(StepsTable.id == tutorial.id)).first()
+        step_entry.position = step.position
+        step_entry.image_url = step.image_url
+        step_entry.description = step.description
+        step_entry.marker = step.marker
+        db.add(step_entry)
+        db.commit()
     return
 
 
