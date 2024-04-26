@@ -1,5 +1,10 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile
+import boto3
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from src.db.s3 import upload_file
+from src.db_models.tutorials import TutorialsTable
+from src.db_models.steps import StepsTable
+from fastapi import APIRouter, Depends, HTTPException, status
 from src.api_models.tutorial import Tutorials, PostTutorials
 from src.db.session import get_db
 from sqlmodel import Session, select
@@ -51,3 +56,12 @@ async def update_tutorial_and_steps(
     # db.refresh(user)
     # return user
     return
+@router.post("/api/test-image-upload")
+async def upload_test_image(
+        file: UploadFile = File(...),
+):
+    upload_file(file)
+    return {"filename": file.filename}
+
+
+
