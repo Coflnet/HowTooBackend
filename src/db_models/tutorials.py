@@ -1,6 +1,5 @@
 from typing import Optional, List
 from sqlmodel import SQLModel, Field, Relationship
-from src.db_models.steps import StepsTable
 
 
 class TutorialsTable(SQLModel, table=True):

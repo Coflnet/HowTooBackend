@@ -1,7 +1,6 @@
 from typing import Optional
 from sqlmodel import Relationship, SQLModel, Field
 from sqlalchemy import JSON
-from src.db_models.tutorials import TutorialsTable
 
 class StepsTable(SQLModel, table=True):
     __tablename__ = "steps"
