@@ -1,0 +1,12 @@
+fastapi
+pydantic
+SQLAlchemy
+sqlalchemy_utils
+sqlmodel
+uvicorn
+python-dotenv
+psycopg2
+passlib
+pyjwt
+datetime
+bcrypt
