@@ -1,7 +1,6 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
-from src.db_models.tutorials import TutorialsTable
-from src.api_models.tutorial import Tutorials
+from src.api_models.tutorial import Tutorials, UpdateTutorials
 from src.api_models.step import Steps
 from src.db_models.steps import StepsTable
 from src.db.session import get_db
@@ -40,11 +39,12 @@ async def get_all_tutorials(
     return
 
 
-@router.put("/api/tutorials")
+@router.put("/api/tutorials/{tutorial_id}")
 async def update_steps_of_a_tutorial(
+    tutorial_id: str,
     steps: List[Steps],
     db: Session = Depends(get_db),
-) -> Tutorials:
+) -> UpdateTutorials:
     # try:
     #     db.add(user)
     # except IntegrityError:

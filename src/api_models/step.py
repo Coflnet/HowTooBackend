@@ -7,4 +7,3 @@ class Steps(BaseModel):
     headline: str
     description: str
     marker: dict
-    tutorial_id: int
