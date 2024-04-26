@@ -27,7 +27,7 @@ def __get_engine(sql_dialect, user, passwd, host, port, db):
 def __get_engine_from_settings():
     load_dotenv(dotenv_path=".env")
     # if not specified in docker-compose file -> localhost
-    sql_dialect = os.getenv("SQL_DIALECT", "postgres")
+    sql_dialect = os.getenv("SQL_DIALECT", "postgresql")
     pghost = os.getenv("POSTGRES_HOSTNAME", "localhost")
     pguser = os.getenv("POSTGRES_USERNAME")
     pgpasswd = os.getenv("POSTGRES_PASSWORD")

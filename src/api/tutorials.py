@@ -10,7 +10,7 @@ from src.db.session import get_db
 from sqlmodel import Session, select
 from sqlalchemy.exc import IntegrityError
 
-router = APIRouter(tags=["Users"])
+router = APIRouter(tags=["Tutorials"])
 
 
 @router.post("/api/tutorials", status_code=status.HTTP_200_OK)

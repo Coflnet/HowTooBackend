@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Dict
 from pydantic import BaseModel
 # from src.api_models.step import Steps
 
@@ -7,14 +7,14 @@ class PostSteps(BaseModel):
     position: int
     file_name: str
     description: str
-    marker: dict
+    marker: Dict[str, str]
 
 class GetSteps(BaseModel):
     id: int
     position: int
     image_url: str
     description: str
-    marker: dict
+    marker: Dict[str, str]
 
 
 class Tutorials(BaseModel):
