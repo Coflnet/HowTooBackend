@@ -5,7 +5,7 @@ from fastapi import FastAPI, File, UploadFile
 
 class Steps(BaseModel):
     position: int
-    file:UploadFile
+    file: UploadFile = File(...)
     description: str
     marker: dict
 
