@@ -1,6 +1,6 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
-from src.api_models.tutorial import Tutorials, GetSteps, Steps
+from src.api_models.tutorial import Tutorials, PostTutorials
 # from src.api_models.step import Steps
 # from src.db_models.steps import StepsTable
 from src.db.session import get_db
@@ -12,7 +12,7 @@ router = APIRouter(tags=["Users"])
 
 @router.post("/api/tutorials")
 async def create_new_tutorial_with_steps(
-    steps: List[Steps],
+    tutorial: PostTutorials,
     db: Session = Depends(get_db),
 ) -> int:
     # db_users = db.exec(select(TutorialsTable)).all()
