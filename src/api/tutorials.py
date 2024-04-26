@@ -19,9 +19,18 @@ async def create_new_tutorial_with_steps(
     files: List[UploadFile] = File(...),
     db: Session = Depends(get_db),
 ) -> int:
+    for file in files:
+        file_path = upload_file(file)
     # db_users = db.exec(select(TutorialsTable)).all()
     # return db_users
     return
+
+# @router.post("/api/test-image-upload")
+# async def upload_test_image(
+#         file: UploadFile = File(...),
+# ):
+#     upload_file(file)
+#     return {"filename": file.filename}
 
 
 @router.get("/api/tutorials/{tutorial_id}", status_code=status.HTTP_200_OK)
@@ -56,12 +65,7 @@ async def update_tutorial_and_steps(
     # db.refresh(user)
     # return user
     return
-@router.post("/api/test-image-upload")
-async def upload_test_image(
-        file: UploadFile = File(...),
-):
-    upload_file(file)
-    return {"filename": file.filename}
+
 
 
 
