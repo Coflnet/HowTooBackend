@@ -9,14 +9,17 @@ class Steps(BaseModel):
     description: str
     marker: dict
 
+class GetSteps(BaseModel):
+    id: int
+    position: int
+    image_url: str
+    headline: str
+    description: str
+    marker: dict
+
 
 class Tutorials(BaseModel):
     id: int
     name: str
-    created_date_time: Optional[str] = None
-    steps: List[Steps]
-    
-
-class UpdateTutorials(BaseModel):
-    name: Optional[str]
-    steps: Optional[List[Steps]]
+    created_date_time: str = None
+    steps: List[GetSteps]

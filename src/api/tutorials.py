@@ -1,8 +1,8 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
-from src.api_models.tutorial import Tutorials, UpdateTutorials
-from src.api_models.step import Steps
-from src.db_models.steps import StepsTable
+from src.api_models.tutorial import Tutorials, GetSteps, Steps
+# from src.api_models.step import Steps
+# from src.db_models.steps import StepsTable
 from src.db.session import get_db
 from sqlmodel import Session, select
 from sqlalchemy.exc import IntegrityError
@@ -14,7 +14,7 @@ router = APIRouter(tags=["Users"])
 async def create_new_tutorial_with_steps(
     steps: List[Steps],
     db: Session = Depends(get_db),
-) -> List[Steps]:
+) -> int:
     # db_users = db.exec(select(TutorialsTable)).all()
     # return db_users
     return
@@ -22,7 +22,7 @@ async def create_new_tutorial_with_steps(
 
 @router.get("/api/tutorials/{tutorial_id}")
 async def get_list_of_steps_from_tutorial_id(
-    tutorial_id: str,
+    tutorial_id: int,
     db: Session = Depends(get_db),
 ) -> Tutorials:
     # db_user = db.exec(select(TutorialsTable).where(TutorialsTable.id == tutorial_id)).first()
@@ -39,12 +39,11 @@ async def get_all_tutorials(
     return
 
 
-@router.put("/api/tutorials/{tutorial_id}")
+@router.put("/api/tutorials")
 async def update_steps_of_a_tutorial(
-    tutorial_id: str,
-    steps: List[Steps],
+    tutorial: Tutorials,
     db: Session = Depends(get_db),
-) -> UpdateTutorials:
+) -> int:
     # try:
     #     db.add(user)
     # except IntegrityError:
