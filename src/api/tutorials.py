@@ -39,7 +39,7 @@ async def create_new_tutorial_with_steps(
         for file in files:
             if step["file_name"] == file.filename:
                 file_path = upload_file(file)
-                continue
+                break
             else:
                 file_path = None
         step_entry = StepsTable(
