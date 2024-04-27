@@ -4,6 +4,7 @@ from fastapi.responses import RedirectResponse
 from src.db.session import init_db
 from fastapi.staticfiles import StaticFiles
 from src.api.tutorials import router as tutorial_router
+from src.api.screenshoter_download import router as screenshoter_router
 import os
 
 
@@ -31,6 +32,7 @@ def app() -> FastAPI:
         os.makedirs("../resources")
 
     app.include_router(tutorial_router)
+    app.include_router(screenshoter_router)
 
     app.mount(
         "/resources",
