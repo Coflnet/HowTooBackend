@@ -71,12 +71,11 @@ async def get_list_of_steps_from_tutorial_id(
             )
         )
     tutorial = Tutorials(
-        id=tutorial_entry.id,
-        name=tutorial_entry.name,
-        created_date_time=tutorial_entry.created_date_time,
-        steps=steps,
+            id=tutorial_entry.id,
+            name=tutorial_entry.name,
+            created_date_time=tutorial_entry.created_date_time,
+            steps=steps,
         )
-     
     return tutorial
     
 
