@@ -71,7 +71,7 @@ async def get_list_of_steps_from_tutorial_id(
             )
         )
     tutorial = Tutorials(
-            id=tutorial_entry.id,
+            id=tutorial_id,
             name=tutorial_entry.name,
             created_date_time=tutorial_entry.created_date_time,
             steps=steps,
@@ -97,8 +97,9 @@ async def update_tutorial_and_steps(
     tutorial_entry.created_date_time = tutorial.created_date_time
     db.add(tutorial_entry)
     db.commit()
+    # step_entries = db.exec(select(StepsTable).where(StepsTable.tutorials_id == tutorial.id)).all()
     for step in tutorial.steps:
-        step_entry = db.exec(select(StepsTable).where(StepsTable.id == tutorial.id)).first()
+        step_entry = db.exec(select(StepsTable).where(StepsTable.tutorials_id == tutorial.id)).first()
         step_entry.position = step.position
         step_entry.image_url = step.image_url
         step_entry.description = step.description
