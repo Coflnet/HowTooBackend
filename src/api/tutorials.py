@@ -10,6 +10,7 @@ from src.db.session import get_db
 from sqlmodel import Session, select
 from sqlalchemy.exc import IntegrityError
 import json
+import random
 
 router = APIRouter(tags=["Tutorials"])
 
@@ -26,6 +27,7 @@ async def create_new_tutorial_with_steps(
         raise HTTPException(status_code=400, detail="Invalid JSON in Form field")
     
     tutorials_entry = TutorialsTable(
+        id=random.randint(100_000_000, 999_999_999),
         name= tutorial["name"],
         created_date_time = tutorial["created_date_time"]
     )
@@ -40,6 +42,7 @@ async def create_new_tutorial_with_steps(
             else:
                 file_path = None
         step_entry = StepsTable(
+            id=random.randint(100_000_000, 999_999_999),
             position=step["position"],
             image_path=file_path,
             description=step["description"],
