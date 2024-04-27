@@ -12,7 +12,7 @@ class PostSteps(BaseModel):
 class GetSteps(BaseModel):
     id: int
     position: int
-    image_url: str
+    image_url: Optional[str]
     description: str
     marker: Dict[str, str]
 

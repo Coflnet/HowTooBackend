@@ -34,3 +34,4 @@ def upload_file(file: UploadFile):
         raise Exception("S3 client not initialized")
 
     client.upload_fileobj(file.file, os.getenv("S3_BUCKET_NAME"), file.filename)
+    return f"https://how-too-public.coflnet.com/how-too-bucket/{file.filename}"

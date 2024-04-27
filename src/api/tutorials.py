@@ -5,7 +5,7 @@ from src.db.s3 import upload_file
 from src.db_models.tutorials import TutorialsTable
 from src.db_models.steps import StepsTable
 from fastapi import APIRouter, Depends, HTTPException, status
-from src.api_models.tutorial import Tutorials, PostTutorials
+from src.api_models.tutorial import Tutorials, GetSteps
 from src.db.session import get_db
 from sqlmodel import Session, select
 from sqlalchemy.exc import IntegrityError
@@ -46,34 +46,44 @@ async def create_new_tutorial_with_steps(
             marker=step["marker"],
             tutorials_id=tutorials_entry.id,
         )
-    db.add(step_entry)
-    db.commit()
-    db.refresh(step_entry)
-    return 1
-
-# @router.post("/api/test-image-upload")
-# async def upload_test_image(
-#         file: UploadFile = File(...),
-# ):
-#     upload_file(file)
-#     return {"filename": file.filename}
+        db.add(step_entry)
+        db.commit()
+        db.refresh(step_entry)
+    return 200
 
 
 @router.get("/api/tutorials/{tutorial_id}", status_code=status.HTTP_200_OK)
 async def get_list_of_steps_from_tutorial_id(
     tutorial_id: int,
     db: Session = Depends(get_db),
-) -> TutorialsTable:
-# ) -> Tutorials:
+) -> Tutorials:
     tutorial_entry = db.exec(select(TutorialsTable).where(TutorialsTable.id == tutorial_id)).first()
-    return tutorial_entry
+    step_entries = db.exec(select(StepsTable).where(StepsTable.tutorials_id == tutorial_id)).all()
+    steps: List[GetSteps] = []
+    for step in step_entries:
+        steps.append(
+            GetSteps(
+                id = step.id,
+                position = step.position,
+                image_url = step.image_url or None,
+                description = step.description,
+                marker = step.marker,
+            )
+        )
+    tutorial = Tutorials(
+        id=tutorial_entry.id,
+        name=tutorial_entry.name,
+        created_date_time=tutorial_entry.created_date_time,
+        steps=steps,
+        )
+     
+    return tutorial
     
 
 @router.get("/api/tutorials", status_code=status.HTTP_200_OK)
 async def get_all_tutorials(
     db: Session = Depends(get_db),
 ) -> List[Tutorials]:
-
     tutorial_entries = db.exec(select(TutorialsTable)).all()
     return tutorial_entries
 
