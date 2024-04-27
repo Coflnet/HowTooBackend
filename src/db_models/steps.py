@@ -1,11 +1,12 @@
-from typing import Optional, Dict
-from sqlmodel import Relationship, SQLModel, Field
+from typing import Optional
+from sqlmodel import Relationship, SQLModel, Field, Column
 from sqlalchemy import JSON
+from sqlalchemy.types import Integer
 
 class StepsTable(SQLModel, table=True):
     __tablename__ = "steps"
 
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: Optional[int] = Field(default=None, sa_column=Column(Integer, primary_key=True))
     position: int
     image_url: Optional[str] = Field(default=None)
     description: str
