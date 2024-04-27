@@ -100,8 +100,11 @@ async def update_tutorial_and_steps(
     tutorial_entry.created_date_time = tutorial.created_date_time
     db.add(tutorial_entry)
     db.commit()
-    # step_entries = db.exec(select(StepsTable).where(StepsTable.tutorials_id == tutorial.id)).all()
-    
+    step_entries = db.exec(select(StepsTable).where(StepsTable.tutorials_id == tutorial.id)).all()
+    existing_step_ids = {step.id for step in tutorial.steps}
+    new_steps = [step for step in step_entries if step.id not in existing_step_ids]
+    for step in new_steps:
+        db.delete(step)
     for step in tutorial.steps:
         step_entry = db.exec(select(StepsTable).where(StepsTable.tutorials_id == tutorial.id)).first()
         step_entry.position = step.position
