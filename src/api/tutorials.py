@@ -44,7 +44,7 @@ async def create_new_tutorial_with_steps(
         step_entry = StepsTable(
             id=random.randint(100_000_000, 999_999_999),
             position=step["position"],
-            image_path=file_path,
+            image_url=file_path,
             description=step["description"],
             marker=step["marker"],
             tutorials_id=tutorials_entry.id,
