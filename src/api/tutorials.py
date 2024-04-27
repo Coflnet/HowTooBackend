@@ -101,6 +101,7 @@ async def update_tutorial_and_steps(
     db.add(tutorial_entry)
     db.commit()
     # step_entries = db.exec(select(StepsTable).where(StepsTable.tutorials_id == tutorial.id)).all()
+    
     for step in tutorial.steps:
         step_entry = db.exec(select(StepsTable).where(StepsTable.tutorials_id == tutorial.id)).first()
         step_entry.position = step.position
@@ -109,7 +110,7 @@ async def update_tutorial_and_steps(
         step_entry.marker = step.marker
         db.add(step_entry)
         db.commit()
-    return
+    return 200
 
 
 
